@@ -10,3 +10,4 @@ document.getElementById('contact-form').addEventListener('submit', function(even
   // Clear the form
   document.getElementById('contact-form').reset();
 });
+

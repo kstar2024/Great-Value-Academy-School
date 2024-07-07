@@ -18,44 +18,42 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-function getLocation() {
-  if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition, showError);
-  } else {
-      alert("Geolocation is not supported by this browser.");
-  }
-}
+document.addEventListener('DOMContentLoaded', function() {
+    const logos = document.querySelectorAll('.logo');
+    const logoInfo = document.getElementById('logoInfo');
+    const logoTitle = document.getElementById('logoTitle');
+    const logoDescription = document.getElementById('logoDescription');
+    const closeButton = document.getElementById('closeButton');
 
-function showPosition(position) {
-  const lat = position.coords.latitude;
-  const lon = position.coords.longitude;
-  const latlon = new google.maps.LatLng(lat, lon);
-  const mapOptions = {
-      center: latlon,
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
-  const map = new google.maps.Map(document.getElementById('map'), mapOptions);
-  const marker = new google.maps.Marker({
-      position: latlon,
-      map: map,
-      title: "You are here!"
-  });
-}
+    const logoDetails = {
+        vlLogo: {
+            title: "VL",
+            description: "VL is a powerful learning management system that helps teachers and students stay connected and organized."
+        },
+        zoomLogo: {
+            title: "Zoom",
+            description: "Zoom is a leading video conferencing platform that enables virtual classes and meetings with ease."
+        },
+        coolsisLogo: {
+            title: "Coolsis",
+            description: "Coolsis is a comprehensive school information system that allows for tracking academic progress and discipline."
+        }
+    };
 
-function showError(error) {
-  switch (error.code) {
-      case error.PERMISSION_DENIED:
-          alert("User denied the request for Geolocation.");
-          break;
-      case error.POSITION_UNAVAILABLE:
-          alert("Location information is unavailable.");
-          break;
-      case error.TIMEOUT:
-          alert("The request to get user location timed out.");
-          break;
-      case error.UNKNOWN_ERROR:
-          alert("An unknown error occurred.");
-          break;
-  }
-}
+    logos.forEach(logo => {
+        logo.addEventListener('click', () => {
+            const id = logo.id;
+            if (logoDetails[id]) {
+                logoTitle.textContent = logoDetails[id].title;
+                logoDescription.textContent = logoDetails[id].description;
+                logoInfo.classList.remove('hidden');
+                logoInfo.classList.add('visible');
+            }
+        });
+    });
+
+    closeButton.addEventListener('click', () => {
+        logoInfo.classList.remove('visible');
+        logoInfo.classList.add('hidden');
+    });
+});
